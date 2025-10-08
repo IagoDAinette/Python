@@ -20,7 +20,7 @@ listaDeTabela = [
 
     {"Codigo FIPE": "7016", "Marca": "Asia Motors", "Modelo": "Topic Carga 2.7 Diesel", "Combustivel": "Disel", "Tipo do Cambio": "manual", "Tamanho Motor": 2.7, "Ano": 1999, "Preco Medio R$": 15525.0}
 ]
-#print(listTable)
+print(listaDeTabela)
 
 #1-B.  5/100
 
@@ -38,10 +38,10 @@ print(dicionarioDeTabela2)
 
 #1-C.  10/100
 #Função de inserção para a lista ListTable
-def addListaDeTable ():
+def addListaDeTabela():
     listaDeTabela.extend([{"Codigo FIPE": "085002", "Marca": "Aston Martin", "Modelo": "Vantage Coupe 4.7 V8", "Combustivel": "Gasolina", "Tipo do Cambio": "Manual", "Tamanho do Motor": 4.7, "Ano": 2016, "Preco Medio R$": 621746.0}])
     #print(listaDeTabela)
-#addListaDeTabela()
+addListaDeTabela()
 
 def addDicionarioDeTabela():
     dicionarioDeTabela2["Codigo FIPE"] =  "38001", "60001", "6001", "37001", "7016", "008001"
@@ -69,7 +69,37 @@ def extractListaTabela():
         else:
             print("Veículo não encontrado")
             return None  # Retorna None se não encontrar
+extractListaTabela()
 
 #Função de extração da dicionarioDeTabela
 def extractDicionarioTabela():  #deletar ultimo insert
-    # Remove os últimos valores
+    #Restaura o dicionario de listas para o formato original
+    dicionarioDeTabela2["Codigo FIPE"] =  "38001", "60001", "6001", "37001", "7016"
+    dicionarioDeTabela2["Marca"] = "Acura", "Agrale", "Alfa Romeo", "AM Gen", "Asia Motors",
+    dicionarioDeTabela2["Modelo"] = "NSX 3.0", "MARRUÁ 2.8 12V TDI", "145 Elegant 2.0 16V", "Hummer 6.5 4x4 Diesel TB", "Topic Carga 2.7 Diesel", 
+    dicionarioDeTabela2["Combustivel"] = "Gasoline", "Diesel", "Gasoline", "Diesel", "Diesel"
+    dicionarioDeTabela2["Tipo de Cambio"] = "manual", "manual", "manual", "manual", "manual"
+    dicionarioDeTabela2["Tamanho do Motor"] = 3.0, 2.8, 2.0, 6.5, 2.7
+    dicionarioDeTabela2["Ano"] = 1995, 2006, 1998, 2000, 1999
+    dicionarioDeTabela2["Preco Medio R$"] = 40374.0, 42102.0, 12507.0, 211478.0, 15525.0
+
+    fipeCode = input("Qual o codigo FIPE do veiculo desejado: ")
+    
+    # Encontra o índice do código FIPE na lista
+    if fipeCode in dicionarioDeTabela2["Codigo FIPE"]:
+        indice = dicionarioDeTabela2["Codigo FIPE"].index(fipeCode)
+        
+        # Extrai todos os dados do veículo nesse índice
+        veiculoEncontrado = {}
+        for chave in dicionarioDeTabela2:
+            veiculoEncontrado[chave] = dicionarioDeTabela2[chave][indice]
+        
+        print("\n Veiculo Encontrado")
+        for chave, valor in veiculoEncontrado.items():
+            print(f"{chave}: {valor}")
+        
+        return veiculoEncontrado
+    else:
+        print(f"\n Veículo com código FIPE '{fipeCode}' não encontrado")
+        return None
+extractDicionarioTabela()
