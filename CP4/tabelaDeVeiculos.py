@@ -9,7 +9,7 @@ Codigo_FIPE   Marca        Modelo                     Combustivel  Cambio_Tipo  
 
 '''
 #1-A.  5/100
-listTable = [
+listaDeTabela = [
     {"Codigo FIPE": "38001", "Marca": "Acura", "Modelo": "NSX 3.0", "Combustivel": "Gasolina", "Tipo do Cambio": "Manual", "Tamaho do motor": 3.0, "Ano": 1995, "Preco medio R$": 40374.0}, 
 
     {"Codigo FIPE": "60001", "Marca": "Agrale", "Modelo": "MARRUÁ 2.8 12V TDI", "Combustivel": "Disel", "Tipo do Cambio": "manual", "Tamanho Motor": 2.8, "Ano": 2006, "Preco Medio R$": 42102.0},
@@ -24,7 +24,7 @@ listTable = [
 
 #1-B.  5/100
 
-dictTable = {
+dicionarioDeTabela2 = {
     "Codigo FIPE": ["38001", "60001", "6001", "37001", "7016"],
     "Marca": ["Acura", "Agrale", "Alfa Romeo", "AM Gen", "Asia Motors"],
     "Modelo": ["NSX 3.0", "MARRUÁ 2.8 12V TDI", "145 Elegant 2.0 16V", "Hummer 6.5 4x4 Diesel TB", "Topic Carga 2.7 Diesel"],
@@ -34,34 +34,42 @@ dictTable = {
     "Ano": [1995, 2006, 1998, 2000, 1999],
     "Preco medio R$": [40374.0, 42102.0, 12507.0, 211478.0, 15525.0] 
 }
-#print(dictTable)
+print(dicionarioDeTabela2)
 
 #1-C.  10/100
 #Função de inserção para a lista ListTable
-def addListTable ():
-    listTable.extend([{"Codigo FIPE": "085002", "Marca": "Aston Martin", "Modelo": "Vantage Coupe 4.7 V8", "Combustivel": "Gasolina", "Tipo do Cambio": "Manual", "Tamanho do Motor": 4.7, "Ano": 2016, "Preco Medio R$": 621746.0}])
-    #print(listTable)
+def addListaDeTable ():
+    listaDeTabela.extend([{"Codigo FIPE": "085002", "Marca": "Aston Martin", "Modelo": "Vantage Coupe 4.7 V8", "Combustivel": "Gasolina", "Tipo do Cambio": "Manual", "Tamanho do Motor": 4.7, "Ano": 2016, "Preco Medio R$": 621746.0}])
+    #print(listaDeTabela)
+#addListaDeTabela()
 
-def addDictTable():
-    dictTable["Codigo FIPE"] =  "38001", "60001", "6001", "37001", "7016", "008001"
-    dictTable["Marca"] = "Acura", "Agrale", "Alfa Romeo", "AM Gen", "Asia Motors", "Audi"
-    dictTable["Modelo"] = "NSX 3.0", "MARRUÁ 2.8 12V TDI", "145 Elegant 2.0 16V", "Hummer 6.5 4x4 Diesel TB", "Topic Carga 2.7 Diesel", "80 2.0"
-    dictTable["Combustivel"] = "Gasoline", "Diesel", "Gasoline", "Diesel", "Diesel", "Gasolina"
-    dictTable["Tipo de Cambio"] = "manual", "manual", "manual", "manual", "manual", "Manual"
-    dictTable["Tamanho do Motor"] = 3.0, 2.8, 2.0, 6.5, 2.7, 2,0
-    dictTable["Ano"] = 1995, 2006, 1998, 2000, 1999, 1995
-    dictTable["Preco Medio R$"] = 40374.0, 42102.0, 12507.0, 211478.0, 15525.0, 13287.0
-    #print(dictTable)
+def addDicionarioDeTabela():
+    dicionarioDeTabela2["Codigo FIPE"] =  "38001", "60001", "6001", "37001", "7016", "008001"
+    dicionarioDeTabela2["Marca"] = "Acura", "Agrale", "Alfa Romeo", "AM Gen", "Asia Motors", "Audi"
+    dicionarioDeTabela2["Modelo"] = "NSX 3.0", "MARRUÁ 2.8 12V TDI", "145 Elegant 2.0 16V", "Hummer 6.5 4x4 Diesel TB", "Topic Carga 2.7 Diesel", "80 2.0"
+    dicionarioDeTabela2["Combustivel"] = "Gasoline", "Diesel", "Gasoline", "Diesel", "Diesel", "Gasolina"
+    dicionarioDeTabela2["Tipo de Cambio"] = "manual", "manual", "manual", "manual", "manual", "Manual"
+    dicionarioDeTabela2["Tamanho do Motor"] = 3.0, 2.8, 2.0, 6.5, 2.7, 2,0
+    dicionarioDeTabela2["Ano"] = 1995, 2006, 1998, 2000, 1999, 1995
+    dicionarioDeTabela2["Preco Medio R$"] = 40374.0, 42102.0, 12507.0, 211478.0, 15525.0, 13287.0
+    print("-"*80)
+    print(dicionarioDeTabela2)
+addDicionarioDeTabela()
 
 #1-D.  10/100
-def extractListTable():
-    listTable.pop("Codigo FIPE")
+#Função de extração da listaDeTabela
+def extractListaTabela():
+    del listaDeTabela[5] #Deleta o ultimo insert
 
-print(listTable)
-print("-"*100)
-addListTable()
-print(listTable)
-print("-"*100)
-extractListTable()
-print(listTable)  
-  
+    fipeCode = input("Qual o codigo FIPE do veiculo desejado: \n")
+    for veiculo in listaDeTabela:  # veiculo é cada dicionário na lista
+        if veiculo["Codigo FIPE"] == fipeCode:
+            print(f"Veículo encontrado: \n{veiculo}")
+            break
+        else:
+            print("Veículo não encontrado")
+            return None  # Retorna None se não encontrar
+
+#Função de extração da dicionarioDeTabela
+def extractDicionarioTabela():  #deletar ultimo insert
+    # Remove os últimos valores
