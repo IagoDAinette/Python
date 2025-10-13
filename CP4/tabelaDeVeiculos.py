@@ -1,3 +1,6 @@
+import csv
+import json
+
 '''DADOS:
 
 Codigo_FIPE   Marca        Modelo                     Combustivel  Cambio_Tipo   Tamanho_Motor  Ano    Preco_Medio_BRL
@@ -37,12 +40,11 @@ dicionarioDeTabela2 = {
 print(dicionarioDeTabela2)
 
 #1-C.  10/100
-#Função de inserção para a lista ListTable
+#Função de inserção para a lista listaDeTabela
 def addListaDeTabela():
     listaDeTabela.extend([{"Codigo FIPE": "085002", "Marca": "Aston Martin", "Modelo": "Vantage Coupe 4.7 V8", "Combustivel": "Gasolina", "Tipo do Cambio": "Manual", "Tamanho do Motor": 4.7, "Ano": 2016, "Preco Medio R$": 621746.0}])
-    #print(listaDeTabela)
-addListaDeTabela()
 
+#Função de inserção para dicionario dicionarioDeTabela2
 def addDicionarioDeTabela():
     dicionarioDeTabela2["Codigo FIPE"] =  "38001", "60001", "6001", "37001", "7016", "008001"
     dicionarioDeTabela2["Marca"] = "Acura", "Agrale", "Alfa Romeo", "AM Gen", "Asia Motors", "Audi"
@@ -54,7 +56,6 @@ def addDicionarioDeTabela():
     dicionarioDeTabela2["Preco Medio R$"] = 40374.0, 42102.0, 12507.0, 211478.0, 15525.0, 13287.0
     print("-"*80)
     print(dicionarioDeTabela2)
-addDicionarioDeTabela()
 
 #1-D.  10/100
 #Função de extração da listaDeTabela
@@ -69,9 +70,9 @@ def extractListaTabela():
         else:
             print("Veículo não encontrado")
             return None  # Retorna None se não encontrar
-extractListaTabela()
 
-#Função de extração da dicionarioDeTabela
+#1-E.  10/1000 
+#Função de extração da dicionarioDeTabela2
 def extractDicionarioTabela():  #deletar ultimo insert
     #Restaura o dicionario de listas para o formato original
     dicionarioDeTabela2["Codigo FIPE"] =  "38001", "60001", "6001", "37001", "7016"
@@ -98,8 +99,93 @@ def extractDicionarioTabela():  #deletar ultimo insert
         for chave, valor in veiculoEncontrado.items():
             print(f"{chave}: {valor}")
         
-        return veiculoEncontrado
+        return veiculoEncontrado #pq o print acima não retorna os valores e sim o return? o Return é de retornar a um local ou de devolver algum comando?
     else:
         print(f"\n Veículo com código FIPE '{fipeCode}' não encontrado")
+        return None #Como funciona o return
+
+#2 - 10/100
+def txt():
+    try:
+        arquivotxt = open("veiculos_fipe.txt", "x", encoding="utf-8")
+    
+    except FileExistsError:
+        print("Erro: O arquivo 'veiculos_fipe.txt' já existe!") # Se o arquivo existir retorna a mensagem de erro
         return None
-extractDicionarioTabela()
+    
+    else:
+        try:
+            for chave, valores in dicionarioDeTabela2.items():# Escreve os dados no arquivo
+                arquivotxt.write(f"{chave}: {valores}\n")
+            print("Dados salvos com sucesso em 'veiculos_fipe.txt'!")
+        
+        except Exception as e:
+            print(f"Erro durante a escrita: {e}") # Verifica se tem algum outro erro
+        
+        finally:
+            arquivotxt.close() # FECHA o arquivo
+            print("Arquivo fechado.")
+    
+    finally:
+        print("Operação de salvamento finalizada.") # Executa SEMPRE, independente de erros
+txt()
+
+#3 - 20/100
+def arquivoCsv():
+    try:
+        with open("veiculos_fipe.csv", "x", newline="", encoding="utf-8") as arquivoCsv:
+            
+            escritorCsv = csv.writer(arquivoCsv) #Cria o arquivo CSV
+                        
+            chaves = list(dicionarioDeTabela2.keys()) #Escreve o cabeçalho
+            escritorCsv.writerow(chaves)
+            print("Cabeçalho escrito com sucesso!")
+            
+            numeroDeVeiculos = len(dicionarioDeTabela2["Codigo FIPE"]) #ESCREVE os dados de cada veículo
+            
+            for indice in range(numeroDeVeiculos): #Cria uma linha com todos os dados do veículo no índice atual
+                linhaVeiculo = []
+                for chave in chaves:
+                    linhaVeiculo.append(dicionarioDeTabela2[chave][indice])
+                
+                escritorCsv.writerow(linhaVeiculo) # Escreve a linha no arquivo CSV
+            
+            print(f"Dados de {numeroDeVeiculos} veículos salvos em 'veiculos_fipe.csv'!")
+    
+    except FileExistsError:
+        print("Erro: O arquivo 'veiculos_fipe.csv' já existe!")
+        return None
+    
+    except Exception as erro:
+        print(f"Erro durante a operação CSV: {erro}")
+    
+    finally:
+        print("Operação de salvamento CSV finalizada.")
+arquivoCsv()
+
+#4 - 20/100
+def arquivoJson():
+    try:
+        dadosJson = json.dumps(  #Converte o dicionário para string JSON formatada
+            dicionarioDeTabela2,
+            ensure_ascii=False,  #Permite caracteres especiais (acentos)
+            indent=4,            #Formata com 4 espaços de identação
+            sort_keys=False      #Mantém a ordem original das chaves
+        )
+        print("Dados convertidos para JSON com sucesso!")
+        
+        with open("veiculos_fipe.json", "x", encoding="utf-8") as arquivoJson: #Salva a string JSON no arquivo usando with open()
+            arquivoJson.write(dadosJson)
+            print("Dados salvos em 'veiculos_fipe.json'!")
+    
+    except FileExistsError:
+
+        print("Erro: O arquivo 'veiculos_fipe.json' já existe!")
+        return None
+    
+    except Exception as erro:
+        print(f"Erro durante a operação JSON: {erro}")
+    
+    finally:
+        print("Operação de salvamento JSON finalizada.")
+arquivoJson()
